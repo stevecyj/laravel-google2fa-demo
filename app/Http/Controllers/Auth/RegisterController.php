@@ -106,4 +106,16 @@ class RegisterController extends Controller
         // Pass the QR barcode image to our view
         return view('google2fa.register', ['QR_Image' => $QR_Image, 'secret' => $registration_data['google2fa_secret']]);
     }
+
+    /**
+     * complete method
+     */
+    public function completeRegistration(Request $request)
+    {
+        // add the session data back to the request input
+        $request->merge(session('registration_data'));
+
+        // Call the default laravel authentication
+        return $this->registration($request);
+    }
 }
